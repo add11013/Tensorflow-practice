@@ -1,0 +1,2 @@
+model_checkpoint_path: "logisticmodel"
+all_model_checkpoint_paths: "logisticmodel"

@@ -60,7 +60,7 @@ def alex_net(x, weights, biases, dropout):
     
     #第一層卷積
     #卷積
-    conv1=conv2d('conv1', x, weights['wc1'], biases['bc1'])
+    conv1=conv2d('conv1', x, weights['wc1'], biases['bc1']) #[-1,28,28,96]
     #下取樣
     pool1=maxpool2d('pool1', conv1, k=2)
     #規範化
@@ -69,43 +69,43 @@ def alex_net(x, weights, biases, dropout):
     #第二層卷積
     #卷積
     #conv2=conv2d('conv2', norm1, weights['wc2'], biases['bc2'])
-    conv2=conv2d('conv2', norm1, weights['wc2'], biases['bc2'])
+    conv2=conv2d('conv2', conv1, weights['wc2'], biases['bc2']) #[-1,28,28,256]
     #下取樣
-    pool2=maxpool2d('pool2', conv2, k=2)
+    pool2=maxpool2d('pool2', conv2, k=2) #[-1,14,14,256]
     #規範化
-    norm2=norm('norm2', pool2, lsize=4)
+    norm2=norm('norm2', pool2, lsize=4)  #[-1,14,14,256]
 
     #第三層卷積
     #卷積
-    conv3=conv2d('conv3', norm2, weights['wc3'], biases['bc3'])
+    conv3=conv2d('conv3', norm2, weights['wc3'], biases['bc3']) #[-1,14,14,384]
     #下取樣
-    pool3=maxpool2d('pool3', conv3, k=2)
+    pool3=maxpool2d('pool3', conv3, k=2) #[-1,7,7,384]
     #規範化
-    norm3=norm('norm3', pool3, lsize=4)
+    norm3=norm('norm3', pool3, lsize=4)  #[-1,7,7,384]
 
     #第四層卷積
-    conv4=conv2d('conv4', norm3, weights['wc4'], biases['bc4'])
+    conv4=conv2d('conv4', norm3, weights['wc4'], biases['bc4']) #[-1,7,7,384]
     #第五層卷積
-    conv5=conv2d('conv5', norm3, weights['wc5'], biases['bc5'])
-    pool5=maxpool2d('pool5', conv5, k=2)
-    norm5=norm('norm5', pool5, lsize=4)
+    conv5=conv2d('conv5', norm3, weights['wc5'], biases['bc5']) #[-1,7,7,256]
+    pool5=maxpool2d('pool5', conv5, k=2) #[-1,4,4,256]
+    norm5=norm('norm5', pool5, lsize=4)  #[-1,4,4,256]
 
     #全連接層1
-    fc1 = tf.reshape(norm5, [-1, weights['wd1'].get_shape().as_list()[0]])
-    fc1 = tf.add(tf.matmul(fc1, weights['wd1']), biases['bd1'])
+    fc1 = tf.reshape(norm5, [-1, weights['wd1'].get_shape().as_list()[0]]) #[-1,4*4*256]
+    fc1 = tf.add(tf.matmul(fc1, weights['wd1']), biases['bd1']) #[-1,4096]
     fc1 = tf.nn.relu(fc1)
     #dropout
     fc1=tf.nn.dropout(fc1, dropout)
 
     #全連接層2
-    fc2 = tf.reshape(fc1, [-1, weights['wd1'].get_shape().as_list()[0]])
-    fc2 = tf.add(tf.matmul(fc2, weights['wd1']), biases['bd1'])
-    fc2 = tf.nn.relu(fc2)
+    fc2 = tf.reshape(fc1, [-1, weights['wd1'].get_shape().as_list()[0]]) #[-1,4096]
+    fc2 = tf.add(tf.matmul(fc2, weights['wd1']), biases['bd1']) #[-1,4096]
+    fc2 = tf.nn.relu(fc2) #[-1,4096]
     #dropout
     fc2 = tf.nn.dropout(fc2, dropout)
 
     #輸出層
-    out = tf.add(tf.matmul(fc2, weights['out']), biases['out'])
+    out = tf.add(tf.matmul(fc2, weights['out']), biases['out']) #[-1,10]
     return out
 
 #建置模型

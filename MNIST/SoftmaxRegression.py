@@ -32,13 +32,13 @@ train_writer=tf.summary.FileWriter('./MNIST/graph/tfboard_test', sess.graph)
 train_writer.close()
 
 def variable_summaries(var):
-    """对一个张量添加多个摘要描述"""
+    """對一個張量添加多個摘要描述"""
     with tf.name_scope('summaries'):
         mean = tf.reduce_mean(var)
-        tf.summary.scalar('mean', mean) # 均值
+        tf.summary.scalar('mean', mean) # 平均
         with tf.name_scope('stddev'):
             stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
-        tf.summary.scalar('stddev', stddev) # 标准差
+        tf.summary.scalar('stddev', stddev) # 標準差
         tf.summary.scalar('max', tf.reduce_max(var)) # 最大值
         tf.summary.scalar('min', tf.reduce_min(var)) # 最小值
         tf.summary.histogram('histogram', var)

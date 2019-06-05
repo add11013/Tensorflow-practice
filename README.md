@@ -3,5 +3,7 @@
 
 > Folders
 >> MNIST: the practices for predicting the MNIST datasets, using CNN, softmax_regression, RNN etc.
+
 >> Titanic: predict the passenger is alive or not
+
 >> 17flowers_TFLearn: using tflearn classify oxflowers

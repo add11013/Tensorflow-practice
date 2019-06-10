@@ -43,7 +43,7 @@ b='kitty'
 c='red'
 string1=a[3:]+b[0:3]+c
 print(string1)
-#
+#chikited, ckitred, ckenkitred, ckenkittred
 
 #7
 n=0
@@ -54,4 +54,7 @@ while n<6:
 print(list1[n])
 #5, 6, 0, index out of range
 
+#8
+sum(list1,1)
+#15, 16, 0, 6
 
